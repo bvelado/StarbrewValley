@@ -5,6 +5,5 @@ package batoust.games.items.actionables;
  */
 interface IActionable 
 {
-	public function Use(actioner:IActioner):Void;
-	public function CanUse(actioner:IActioner):Bool;
+	public function Use(actioner:IUser):Void;
 }

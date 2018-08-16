@@ -515,7 +515,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "66",
+			build: "206",
 			company: "Batoust",
 			file: "StarbrewValley",
 			fps: 60,

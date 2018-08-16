@@ -1,6 +1,8 @@
 package batoust.games.items.actionables;
 import batoust.games.PlayState;
+import batoust.games.map.Seedable;
 import flixel.FlxG;
+import flixel.FlxObject;
 import source.batoust.games.player.Player;
 
 /**
@@ -18,18 +20,18 @@ class WateringCan implements IActionable
 	
 	/* INTERFACE batoust.games.items.actionables.IActionable */
 	
-	public function Use(actioner:IActioner):Void
+	public function Use(actioner:IUser):Void
 	{
 		// TODO :
 		// Setup an common access to the map tiles nor delegate 
-		//if (FlxG.state === PlayState)
-			//trace(((PlayState) FlxG.state).map._playerSpawn);
+		var seedableInFrontOfPlayer = cast (FlxG.state, PlayState).TryToUseItemInFrontOfPlayer();
+		
+		if (seedableInFrontOfPlayer != null) {
+			trace("Watering tile @" + seedableInFrontOfPlayer.x + ";" + seedableInFrontOfPlayer.y);
+		}
 	}
 	
-	public function CanUse(actioner:IActioner):Bool{
-		if (actioner.GetEnergy() > 60)
-			return true;
-		return false;
+	private function WaterSeedable(seedable:FlxObject){
+		
 	}
-	
 }

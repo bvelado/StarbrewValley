@@ -4,7 +4,7 @@ import flixel.math.FlxPoint;
 /**
  * @author Batoust
  */
-interface IActioner 
+interface IUser 
 {
 	public function UseActionable(actionable:IActionable):Void;
 	public function GetEnergy():Int;

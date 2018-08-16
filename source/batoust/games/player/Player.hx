@@ -1,8 +1,10 @@
 package source.batoust.games.player;
 
 import batoust.games.items.actionables.IActionable;
-import batoust.games.items.actionables.IActioner;
+import batoust.games.items.actionables.IUser;
+import batoust.games.items.actionables.WateringCan;
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
@@ -11,20 +13,24 @@ import flixel.util.FlxColor;
  * ...
  * @author Batoust
  */
-class Player extends FlxSprite implements IActioner
+class Player extends FlxSprite implements IUser
 {	
 	private var movementSpeed:Float = 200;
 	private var tool:IActionable;
+	
+	public var direction(default, null):UInt;
 	
 	public function new(X:Float=0, Y:Float=0, W:Float=32, H:Float=32)
 	{
 		super(X, Y);
 		
-		makeGraphic(32, 32, FlxColor.BLUE);
+		makeGraphic(32,32, FlxColor.BLUE);
 		drag.x = drag.y = 1600;
 		
 		setSize(W, H);
 		offset.set(0, 0);
+		
+		tool = new WateringCan(this);
 	}
 	
 	public function handleInput(){
@@ -50,27 +56,46 @@ class Player extends FlxSprite implements IActioner
 			if (_up)
 			{
 				mA = -90;
-				if (_left)
+				direction = FlxObject.UP;
+				if (_left) {
 					mA -= 45;
-				else if (_right)
+					direction = FlxObject.LEFT;
+				}
+				else if (_right) {
 					mA += 45;
+					direction = FlxObject.RIGHT;
+				}
 			}
 			else if (_down)
 			{
 				mA = 90;
-				if (_left)
+				direction = FlxObject.DOWN;
+				if (_left) {
 					mA += 45;
-				else if (_right)
+					direction = FlxObject.LEFT;
+				}
+				else if (_right) {
 					mA -= 45;
+					direction = FlxObject.RIGHT;
+				}
 			}
-			else if (_left)
+			else if (_left) {
 				mA = 180;
-			else if (_right)
+				direction = FlxObject.LEFT;
+			}
+			else if (_right) {
 				mA = 0;
+				direction = FlxObject.RIGHT;
+			}
 				
 			velocity.set(movementSpeed, 0);
 			velocity.rotate(FlxPoint.weak(0, 0), mA);
 		}
+		
+		if (FlxG.keys.anyPressed([SPACE])){
+			UseActionable(tool);
+		}
+		
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -80,13 +105,7 @@ class Player extends FlxSprite implements IActioner
 	}
 	
 	public function UseActionable(actionable:IActionable):Void {
-		
-		if (tool.CanUse(this)){
-			
-			tool.Use(this);
-		} else {
-			trace("Can't use my tool bro");
-		}
+		actionable.Use(this);
 	}
 	
 	public function GetEnergy():Int {
