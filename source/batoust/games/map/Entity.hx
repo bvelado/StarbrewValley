@@ -1,6 +1,7 @@
 package batoust.games.map;
 
 import flixel.FlxObject;
+import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 
 /**
@@ -12,7 +13,7 @@ import flixel.math.FlxRect;
 {
 	public var rect:FlxRect;
 	
-	public function new(x:Int, y:Int, width:Int, height:Int )
+	public function new(x:Int, y:Int, width:Int, height:Int)
 	{
 		super();
 		
@@ -21,6 +22,10 @@ import flixel.math.FlxRect;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+	}
+	
+	public function getCenterPos():FlxPoint{
+		return new FlxPoint(x + width / 2, y + height/2);
 	}
 	
 }

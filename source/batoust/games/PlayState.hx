@@ -1,6 +1,7 @@
 package batoust.games;
 
 import batoust.games.map.Map;
+import batoust.games.map.Seedable;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -59,6 +60,16 @@ class PlayState extends FlxState
 		_debugSprite.y = Math.round(_posInFrontOfPlayer.y / _map.tileHeight) * _map.tileHeight;
 		
 		FlxG.collide(_map._colliders, _player);
+	}
+	
+	public function GetSeedableInFrontOfPlayer():Seedable {
+		for (seedable in _map._seedables){
+			if (seedable.rect.containsPoint(_posInFrontOfPlayer)){
+				return seedable;
+			}
+		}
+		
+		return null;
 	}
 	
 	public function TryToUseItemInFrontOfPlayer():FlxObject {

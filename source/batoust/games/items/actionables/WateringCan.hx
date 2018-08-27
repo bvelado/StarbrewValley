@@ -24,14 +24,14 @@ class WateringCan implements IActionable
 	{
 		// TODO :
 		// Setup an common access to the map tiles nor delegate 
-		var seedableInFrontOfPlayer = cast (FlxG.state, PlayState).TryToUseItemInFrontOfPlayer();
+		var seedableInFrontOfPlayer = cast (FlxG.state, PlayState).GetSeedableInFrontOfPlayer();
 		
 		if (seedableInFrontOfPlayer != null) {
-			trace("Watering tile @" + seedableInFrontOfPlayer.x + ";" + seedableInFrontOfPlayer.y);
+			WaterSeedable(seedableInFrontOfPlayer);
 		}
 	}
 	
-	private function WaterSeedable(seedable:FlxObject){
-		
+	private function WaterSeedable(seedable:Seedable){
+		seedable.Water();
 	}
 }
